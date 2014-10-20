@@ -19,7 +19,10 @@ void print_usage()
     printf("        -s server ip:port\n");
     printf("        -r retset data \n");
     printf("For example:\n");
-    printf("testcase -p/Conf/test.ini -s172.17.0.36:2181 -r\n");
+    printf(">cat test.ini | testcase -r\n");
+    printf("    put test.ini to zookeeper server\n");
+    printf(">testcase -p/Conf/test.ini -s172.17.0.36:2181 \n");
+    printf("    get config data from zookeeper server\n");
 }
  
 void get_option(int argc,const char* argv[])
