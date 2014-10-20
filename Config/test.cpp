@@ -7,6 +7,58 @@
 using namespace std;
 using namespace inifile;
 
+int g_reset = 0;
+char g_host[512] = "172.17.0.36:2181";
+char g_filepath[512] = "/Conf/test.ini";
+/**********unitl*********************/  
+void print_usage()
+{
+    printf("Usage : [testcase] [-h] [-m] [-s ip:port] \n");
+    printf("        -h Show help\n");
+    printf("        -p set the path of config data\n");
+    printf("        -s server ip:port\n");
+    printf("        -r retset data \n");
+    printf("For example:\n");
+    printf("testcase -p/Conf/test.ini -s172.17.0.36:2181 -r\n");
+}
+ 
+void get_option(int argc,const char* argv[])
+{
+	extern char    *optarg;
+	int            optch;
+	int            dem = 1;
+	const char    optstring[] = "hrps:";
+    
+    
+	while((optch = getopt(argc , (char * const *)argv , optstring)) != -1 )
+	{
+		switch( optch )
+		{
+		case 'h':
+			print_usage();
+			exit(-1);
+		case '?':
+			print_usage();
+			printf("unknown parameter: %c\n", optopt);
+			exit(-1);
+		case ':':
+			print_usage();
+			printf("need parameter: %c\n", optopt);
+			exit(-1);
+        case 'r':
+                g_reset = 1;
+            break;
+        case 's':
+            strncpy(g_host,optarg,sizeof(g_host));
+            break;
+        case 'p':
+            strncpy(g_filepath,optarg,sizeof(g_filepath));
+            break;
+		default:
+			break;
+		}
+	}
+} 
 int setdata(const char *host,const char * filepath,const char *data)
 {
 
@@ -41,24 +93,26 @@ int setdata(const char *host,const char * filepath,const char *data)
     
     zookeeper_close(zkhandle); 
 }
-int main(int argc,char *argv[])
+int main(int argc,const char *argv[])
 {
-    char host[512] = "172.17.0.36:2181";
-    char filepath[512] = "/Conf/test.ini";
-    
-    if(argc >= 3){
-        strncpy(host,argv[1],sizeof(host));
-        strncpy(filepath,argv[2],sizeof(filepath));
-    }
+    get_option(argc,argv);
+
     /**set data**/
-    char data[512]="[COMMON]\nDB=mysql\nPASSWD=root\n";
-
-    setdata(host,filepath,data);
-
+    /** -r **/
+    if(g_reset == 1){
+        string s;
+        string in_data;
+        while(cin>>s){
+            in_data += s + "\n";
+        }
+        cout<<"in_data:"<<in_data<<endl;
+    
+        setdata(g_host,g_filepath,in_data.c_str());
+    }
    /** read test **/
 
     IniFile ini;
-    ini.open2(host,filepath);
+    ini.open2(g_host,g_filepath);
 
     //获取指定段的指定项的值
     int ret = 0;
