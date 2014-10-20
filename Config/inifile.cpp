@@ -165,17 +165,6 @@ int IniFile::open(const string &filename)
 	return 0;
 }
 
-void zktest_watcher_g(zhandle_t* zh, int type, int state, const char* path, void* watcherCtx)  
-{  
-/*  
-    printf("watcher event\n");  
-    printf("type: %d\n", type);  
-    printf("state: %d\n", state);  
-    printf("path: %s\n", path);  
-    printf("watcherCtx: %s\n", (char *)watcherCtx);  
-*/  
-    //do nothing
-}  
 
 string zkopen(const string &host,const string &filepath,char *fp,int len)
 {
@@ -187,7 +176,7 @@ string zkopen(const string &host,const string &filepath,char *fp,int len)
   
     zoo_set_debug_level(ZOO_LOG_LEVEL_WARN); //设置日志级别,避免出现一些其他信息  
 
-    zhandle_t* zkhandle = zookeeper_init(host.c_str(),zktest_watcher_g, timeout, 0, (char *)"Monitor Test", 0);  
+    zhandle_t* zkhandle = zookeeper_init(host.c_str(),NULL, timeout, 0, (char *)"Monitor Test", 0);  
 
     if (zkhandle ==NULL)  
     {  
