@@ -9,3 +9,4 @@ ZooKeeper练习代码
 * Notify : 分布式通知/协调
 * NameService: 命名服务
 * Lock: 分布式锁
+* Queue: 分布式队列
