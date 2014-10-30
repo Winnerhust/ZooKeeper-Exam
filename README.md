@@ -10,3 +10,4 @@ ZooKeeper练习代码
 * NameService: 命名服务
 * Lock: 分布式锁
 * Queue: 分布式队列
+* mymetaq: 负载均衡，实现了生产者负载均衡，消费者负载均衡尚未完成
