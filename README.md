@@ -11,3 +11,5 @@ ZooKeeper练习代码
 * Lock: 分布式锁
 * Queue: 分布式队列
 * mymetaq: 负载均衡，实现了生产者负载均衡，消费者负载均衡尚未完成
+
+更多详情，请转到[我的博客](http://blog.csdn.net/qq910894904/article/details/40835105)
